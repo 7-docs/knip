@@ -1,7 +1,5 @@
 import { load } from 'dotenv';
-import { createClient } from '@supabase/supabase-js';
-import { getCompletionHandler } from '@7-docs/edge';
-import * as supabase from '@7-docs/edge/supabase';
+import { getCompletionHandler, pinecone } from '@7-docs/edge';
 import { namespace, prompt, system } from '../../config.ts';
 import type { MetaData } from '@7-docs/edge';
 
@@ -11,13 +9,16 @@ const env = await load();
 const getEnvVar = (key: string) => Deno.env.get(key) ?? env[key];
 
 const OPENAI_API_KEY = getEnvVar('OPENAI_API_KEY');
-const SUPABASE_URL = getEnvVar('SUPABASE_URL');
-const SUPABASE_API_KEY = getEnvVar('SUPABASE_API_KEY');
+const PINECONE_URL = getEnvVar('PINECONE_URL');
+const PINECONE_API_KEY = getEnvVar('PINECONE_API_KEY');
 
-console.log({ namespace });
-
-const client = createClient(SUPABASE_URL, SUPABASE_API_KEY);
-const query: QueryFn = (vector: number[]) => supabase.query({ client, namespace, vector });
+const query: QueryFn = (vector: number[]) =>
+  pinecone.query({
+    url: PINECONE_URL,
+    token: PINECONE_API_KEY,
+    vector,
+    namespace,
+  });
 
 const handler = getCompletionHandler({ OPENAI_API_KEY, query, system, prompt });
 

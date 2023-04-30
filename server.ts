@@ -11,7 +11,7 @@ serve({
   build: {
     buildTarget: 'es2022',
     ssg: {
-      exclude: /\/api/,
+      exclude: /^\/api\//,
     },
   },
 });

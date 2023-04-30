@@ -1,6 +1,6 @@
 # Knip Assistant (alpha)
 
-Source of [7-docs-knip.deno.dev](https://7-docs-knip.deno.dev), built with:
+Source of [knip.deno.dev](https://knip.deno.dev), built with:
 
 - Deno + Deno Deploy
 - [@7-docs/edge](https://www.npmjs.com/package/@7-docs/edge)
